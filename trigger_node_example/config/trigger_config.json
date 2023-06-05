@@ -1,0 +1,20 @@
+{
+  "domain": "robot",
+  "des_module_id": [0],
+  "des_module_id_back": [0],
+  "desc": "trigger lane",
+  "duration_ts_back": 5000,
+  "duration_ts_front": 5000,
+  "gps_pos": {"latitude": -1, "longitude": -1},
+  "level": 1,
+  "lost_id_pack": [],
+  "src_module_id": 203,
+  "status": 1,
+  "strategy_version": "Pilot3.0_V1.0_20220526",
+  "timestamp": -1,
+  "topics": ["/image_raw/compressed", "/ai_msg_mono2d_trash_detection"],
+  "trigger_type": 1110,
+  "unique_id": "OriginBot002",
+  "version":"v1.0.0",
+  "extra_kv":[]
+}
