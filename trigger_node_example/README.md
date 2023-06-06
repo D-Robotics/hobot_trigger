@@ -88,12 +88,31 @@ colcon build --packages-select trigger_node_example \
 | ---------------------- | ----------- | ------------------------------------------- | -------- | -------------------- | ----------------------------- |
 | cache_path  | std::string | 缓存在sd卡中的rosbag文件夹路径 | 否      | 根据实际部署环境配置 | /home/hobot/recorder/ |
 | config_file | std::string | trigger模块初始化配置文件路径 | 否 | 根据实际部署环境配置 | config/trigger_config.json |
-| format | std::string | trigger记录rosbag数据的格式 | 否 | mcap | mcap |
+| format | std::string | trigger记录rosbag数据的格式 | 否 | mcap/sqlite3 | mcap |
 | isRecord | int | 选择trigger事件是否记录rosbag数据 | 否 | 1:记录 / 0:不记录 | 0 |
 | agent_msg_sub_topic_name  | std::string | 接收agent_node节点的的topic名 | 否      | 需要与agent_node配置一致 | /hobot_agent |
 | event_msg_sub_topic_name  | std::string | 接收trigger事件相关话题的topic名 | 是      | 需要与agent_node配置一致 |  |
 | msg_pub_topic_name  | std::string | trigger_node发布trigger事件的话题名 | 否      | 根据实际部署环境配置 | /hobot_trigger |
 
+## 注意事项
+
+- config_file配置文件格式为json格式，具体配置如下：
+  {
+   "domain":"robot",          // Trigger事件domain
+   "desc":"trigger lane",     // trigger描述信息
+   "duration_ts_back":5000,   // 录制trigger发生后持续时长
+   "duration_ts_front":5000,  // 录制tirgger 发生前持续时长
+   "level":1,                 //优先级
+   "src_module_id": 203,      // 发生trigger的模块
+   "status": 1,               // trigger状态
+   "strategy_version": "Pilot3.0_V1.0_20220526",   //trigger策略版本
+   "topics": ["/image_raw/compressed", "/ai_msg_mono2d_trash_detection"],  // 需要记录的话题list，包含话题名
+   "trigger_type": 1110,      // trigger类型
+   "unique_id": "OriginBot002",  // 设备唯一标识
+   "version":"v1.0.0",        // trigger module 版本
+   "extra_kv":[]              // 冗余扩展信息
+  }
+  
 ## 运行
 
 编译成功后，将生成的install路径拷贝到地平线旭日X3开发板上（如果是在X3上编译，忽略拷贝步骤），并执行如下命令运行：
@@ -107,6 +126,7 @@ source ./install/setup.bash
 # config中为示例使用的模型，根据实际安装路径进行拷贝
 # 如果是板端编译（无--merge-install编译选项），拷贝命令为cp -r install/PKG_NAME/lib/PKG_NAME/config/ .，其中PKG_NAME为具体的package名。
 cp -r install/lib/trigger_node_example/config/ .
+cp -r install/lib/mono2d_trash_detection/config/ .
 
 # 启动agent node
 ros2 run trigger_node_example trigger_node_example
@@ -137,6 +157,7 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:./install/lib/
 
 # config中为示例使用的模型，根据实际安装路径进行拷贝
 cp -r install/lib/trigger_node_example/config/ .
+cp -r install/lib/mono2d_trash_detection/config/ .
 
 # 启动agent node检测node
 ./install/lib/trigger_node_example/trigger_node_example

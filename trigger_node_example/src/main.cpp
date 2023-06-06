@@ -17,7 +17,6 @@
 
 #include "rclcpp/rclcpp.hpp"
 
-
 #include "include/trigger_example_node.h"
 
 
