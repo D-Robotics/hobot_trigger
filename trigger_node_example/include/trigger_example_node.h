@@ -44,10 +44,13 @@ class TriggerExampleNode : public TriggerNode {
   void EventTopicCallback(
     const ai_msgs::msg::PerceptionTargets::ConstSharedPtr msg);
 
+  std::string event_msg_sub_topic_name_ = "/ai_msg_mono2d_trash_detection";
+ 
  private:
 
   rclcpp::Subscription<ai_msgs::msg::PerceptionTargets>::SharedPtr
       event_msg_subscription_ = nullptr;
+
 };
 
 #endif  // trigger_node_example_H_

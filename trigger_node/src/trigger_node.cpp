@@ -205,14 +205,11 @@ int TriggerNode::LoadConfig() {
   config_.desc = document["desc"].GetString();
   config_.duration_ts_back = document["duration_ts_back"].GetInt();
   config_.duration_ts_front = document["duration_ts_front"].GetInt();
-  config_.gps_pos.latitude = document["gps_pos"]["latitude"].GetInt();
-  config_.gps_pos.longitude = document["gps_pos"]["longitude"].GetInt();
   config_.level = document["level"].GetInt();
 
   config_.src_module_id = document["src_module_id"].GetInt();
   config_.status = document["status"].GetInt();
   config_.strategy_version = document["strategy_version"].GetString();
-  config_.timestamp = document["timestamp"].GetInt64();
 
   config_.topics.clear();
   for (rapidjson::SizeType i = 0; i < document["topics"].Size(); i++) {
