@@ -23,7 +23,7 @@
 int main(int argc, char **argv)
 {
     rclcpp::init(argc, argv);
-    RCLCPP_INFO(rclcpp::get_logger("TriggerExampleNode"), "Wait 10 seconds at first time.");
+    RCLCPP_WARN(rclcpp::get_logger("TriggerExampleNode"), "Wait 10 seconds at first time.");
     rclcpp::sleep_for(std::chrono::seconds(10));
     auto node = std::make_shared<TriggerExampleNode>("hobot_trigger_example_node");
     rclcpp::spin(node);

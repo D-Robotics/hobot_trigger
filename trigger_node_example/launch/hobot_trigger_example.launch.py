@@ -37,7 +37,7 @@ def generate_launch_description():
             {"format": "mcap"},
             {"mag_bag_size": 524288000},
         ],
-        arguments=['--ros-args', '--log-level', 'warn']
+        arguments=['--ros-args', '--log-level', 'error']
     )
 
     # jpeg图片编码&发布pkg
@@ -57,6 +57,18 @@ def generate_launch_description():
         arguments=['--ros-args', '--log-level', 'error']
     )
 
+    # visualization node 示例节点pkg
+    visualization_node = Node(
+        package='hobot_visualization',
+        executable='hobot_visualization',
+        output='screen',
+        parameters=[
+            {"msg_pub_topic_name": "/hobot_visualization"},
+            {"smart_msg_sub_topic_name": "/ai_msg_mono2d_trash_detection"},
+        ],
+        arguments=['--ros-args', '--log-level', 'error']
+    )
+
     # trigger node 示例节点pkg
     trigger_node_example = Node(
         package='trigger_node_example',
@@ -71,7 +83,7 @@ def generate_launch_description():
             {"event_msg_sub_topic_name": "/ai_msg_mono2d_trash_detection"},
             {"msg_pub_topic_name": "/hobot_trigger"}
         ],
-        arguments=['--ros-args', '--log-level', 'warn']
+        arguments=['--ros-args', '--log-level', 'info']
     )
 
     return LaunchDescription([
@@ -81,6 +93,8 @@ def generate_launch_description():
         recorder_node,
         # jpeg图片编码&发布pkg
         jpeg_compressed_codec_node,
+        # visualization node 示例节点pkg
+        visualization_node,
         # trigger node 示例节点pkg
         trigger_node_example,
     ])
