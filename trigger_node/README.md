@@ -123,7 +123,7 @@ colcon build --packages-select trigger_node \
    "level":1,                 //优先级
    "src_module_id": 203,      // 发生trigger的模块
    "status": 1,               // trigger状态
-   "strategy_version": "Pilot3.0_V1.0_20220526",   //trigger策略版本
+   "strategy_version": "Robot_sweeper_V1.0_20230526",   //trigger策略版本
    "topics": ["/image_raw/compressed", "/ai_msg_mono2d_trash_detection"],  // 需要记录的话题list，包含话题名
    "trigger_type": 1110,      // trigger类型
    "unique_id": "OriginBot002",  // 设备唯一标识
