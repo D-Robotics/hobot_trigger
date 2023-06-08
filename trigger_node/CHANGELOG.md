@@ -1,6 +1,6 @@
 # Changelog for package trigger_node
 
-tros_2.0.1 (2023-6-5)
+tros_2.0.0 (2023-6-8)
 ------------------
 1. Trigger配置解析功能。
 2. 根据Trigger事件截取指定rosbag数据包的功能。

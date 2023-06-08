@@ -16,12 +16,12 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             os.path.join(
                 get_package_share_directory('dnn_node_example'),
-                'launch/hobot_dnn_node_example.launch.py')),
+                'launch/dnn_node_example.launch.py')),
         launch_arguments={
-            'config_file': 'config/ppyoloworkconfig.json',
-            'msg_pub_topic_name': 'ai_msg_mono2d_trash_detection',
-            'image_width': str(1920),
-            'image_height': str(1080)
+            'dnn_example_config_file': 'config/ppyoloworkconfig.json',
+            'dnn_example_msg_pub_topic_name': 'ai_msg_mono2d_trash_detection',
+            'dnn_example_image_width': str(1920),
+            'dnn_example_image_height': str(1080)
         }.items()
     )
 
