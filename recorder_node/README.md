@@ -98,8 +98,8 @@ colcon build --packages-select recorder_node \
 | ---------------------- | ----------- | ------------------------------------------- | -------- | -------------------- | ----------------------------- |
 | cache_path  | std::string | 缓存在运行环境中的rosbag文件夹路径 | 否 | 根据实际部署环境配置 | /home/hobot/recorder/ |
 | cache_time | long | 缓存数据保留的时间(单位:ms) | 否 | 根据实际部署环境配置 | 60000 |
-| cycle_time | long | 清理缓存数据循环的时间(单位:s) | 否 | 根据实际部署环境配置 | 60000 |
-| format | std::string | 记录rosbag数据的格式 | 否 | mcap | mcap/sqlite3 |
+| cycle_time | long | 清理缓存数据循环的时间(单位:s) | 否 | 根据实际部署环境配置 | 60 |
+| format | std::string | 记录rosbag数据的格式 | 否 | mcap | mcap |
 | mag_bag_size | long | rosbag每个缓存数据包大小(单位:bit) | 否 | 根据实际部署环境配置 | 524288000 |
 
 ## 运行
