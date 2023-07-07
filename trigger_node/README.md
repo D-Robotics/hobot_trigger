@@ -106,7 +106,7 @@ colcon build --packages-select trigger_node \
 | ---------------------- | ----------- | ------------------------------------------- | -------- | -------------------- | ----------------------------- |
 | cache_path  | std::string | 缓存在运行环境中的rosbag文件夹路径 | 否      | 根据实际部署环境配置 | /home/hobot/recorder/ |
 | config_file | std::string | trigger模块初始化配置文件路径 | 否 | 根据实际部署环境配置 | config/trigger_config.json |
-| format | std::string | trigger记录rosbag数据的格式 | 否 | mcap/sqlite3 | mcap |
+| format | std::string | trigger记录rosbag数据的格式 | 否 | mcap | mcap |
 | isRecord | int | 选择trigger事件是否记录rosbag数据 | 否 | 1:记录 / 0:不记录 | 0 |
 | agent_msg_sub_topic_name  | std::string | 接收agent_node节点的的topic名 | 否      | 需要与agent_node配置一致 | /hobot_agent |
 | event_msg_sub_topic_name  | std::string | 接收trigger事件相关话题的topic名 | 是      | 需要与agent_node配置一致 |  |
