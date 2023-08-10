@@ -462,37 +462,74 @@ int TriggerNode::Encode(std::string& json_str, Config& result) {
 
 int TriggerNode::Decode(std::string& json_str, Config& config) {
   
-  rapidjson::Document doc;
-  doc.Parse(json_str.c_str());
+  rapidjson::Document document;
+  document.Parse(json_str.c_str());
 
-  if (!doc.IsObject()) {
-      std::cerr << "Invalid JSON format" << std::endl;
-      return -1;
+  if (document.HasParseError() || !document.IsObject()) {
+    std::cerr << "Invalid JSON format" << std::endl;
+    RCLCPP_INFO(rclcpp::get_logger("TriggerNode"), "Invalid JSON format");
+    return -1;
   }
 
-  int src_module_id = doc["src_module_id"].GetInt();
-  if (src_module_id != config.src_module_id) {
-    return 0;
+  if (!document.HasMember("strategy") || !document["strategy"].IsArray()) {
+    RCLCPP_INFO(rclcpp::get_logger("TriggerNode"), "Invalid Trigger Task");
+    return -1;
   }
 
-  config.duration_ts_back = doc["duration_ts_back"].GetInt64();
-  config.duration_ts_front = doc["duration_ts_front"].GetInt64();
-  config.trigger_type = doc["trigger_type"].GetInt();
-  config.unique_id = doc["unique_id"].GetString();
+  const rapidjson::Value& strategyArray = document["strategy"];
 
+  if (!strategyArray.Empty()){
+    for (rapidjson::SizeType i = 0; i < strategyArray.Size(); ++i) {
+      const rapidjson::Value& strategyObject = strategyArray[i];
+
+      if (strategyObject.HasMember("src_module_id")) {
+        int src_module_id = strategyObject["src_module_id"].GetInt();
+        if(src_module_id != config.src_module_id){
+          continue;
+        }
+        config.src_module_id = src_module_id;
+
+        if (strategyObject.HasMember("duration_ts_back")) {
+          config.duration_ts_back = strategyObject["duration_ts_back"].GetInt64();
+        }
+        if (strategyObject.HasMember("duration_ts_front")) {
+          config.duration_ts_front = strategyObject["duration_ts_front"].GetInt64();
+        }
+        if (strategyObject.HasMember("level")) {
+          config.level = strategyObject["level"].GetInt();
+        }
+        if (strategyObject.HasMember("trigger_type")) {
+          config.trigger_type = strategyObject["trigger_type"].GetInt();
+        }
+        if (strategyObject.HasMember("unique_id")) {
+          config.unique_id = strategyObject["unique_id"].GetString();
+        }
+
+        if (document.HasMember("version") && document["version"].IsString()) {
+          config.version = document["version"].GetString();
+        }
+
+        if (document.HasMember("trigger_status") && document["trigger_status"].IsBool()) {
+            config.status = document["trigger_status"].GetBool();
+        }
+      }
+
+    }
+  }
   return 0;
 }
 
 
 void TriggerNode::AgentTopicCallback(
     const std_msgs::msg::String::ConstSharedPtr msg) {
-  std::stringstream ss;
-  ss << "Recved msg"
-     << ", frame_id: " << msg->data << "\n";
 
   std::string json_str = msg->data;
   Decode(json_str, config_);
-  
+
+  Encode(json_str, config_);
+  std::stringstream ss;
+  ss << "Updated Trigger Config: " << json_str << "\n";
+
   RCLCPP_INFO(rclcpp::get_logger("TriggerNode"), "%s", ss.str().c_str());
 }
 
