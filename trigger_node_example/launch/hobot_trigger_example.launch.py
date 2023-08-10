@@ -83,7 +83,7 @@ def generate_launch_description():
             {"event_msg_sub_topic_name": "/ai_msg_mono2d_trash_detection"},
             {"msg_pub_topic_name": "/hobot_trigger"}
         ],
-        arguments=['--ros-args', '--log-level', 'info']
+        arguments=['--ros-args', '--log-level', 'warn']
     )
 
     return LaunchDescription([
