@@ -2,7 +2,7 @@
 
 tros_2.0.4 (2024-3-6)
 ------------------
-1. launch启动脚本中`codec` node的`out_format`配置项参数由`mjpeg-compressed`变更为`mjpeg`。
+1. launch启动脚本中`codec` node的`out_format`配置项参数由`jpeg-compressed`变更为`jpeg`。
 
 tros_2.0.3 (2023-08-11)
 ------------------
