@@ -1,5 +1,9 @@
 # Changelog for package trigger_node_example
 
+tros_2.0.4 (2024-3-6)
+------------------
+1. launch启动脚本中`codec` node的`out_format`配置项参数由`mjpeg-compressed`变更为`mjpeg`。
+
 tros_2.0.3 (2023-08-11)
 ------------------
 1. 新增通过std_msg话题给Trigger模块发放任务,更改Trigger配置方法。
