@@ -1,68 +1,66 @@
-# 功能介绍
+English| [简体中文](./README_cn.md)
 
-trigger_node_example package 是地平线在自定义Trigger基础模块基础上，开发的Trigger模块使用示例。本示例展示的功能，是订阅垃圾检测框信息，根据垃圾检测框的数量，判断是否触发Trigger事件的示例。
+# Function Introduction
 
-本package支持直接订阅ai_msg/msg/PerceptionTargets类型的话题，在话题回调函数中，判断是否触发Trigger事件，并记录Trigger事件相关的Rosbag包，最后向agent_node发布Trigger事件话题信息。
+The `trigger_node_example` package is developed by Horizon based on the custom Trigger basic module, demonstrating the usage of Trigger module. The functionality showcased in this example is subscribing to garbage detection box information and triggering Trigger events based on the number of garbage detection boxes.
 
-# 编译
+This package supports direct subscription to the topic of type `ai_msg/msg/PerceptionTargets`. In the topic callback function, it determines whether to trigger Trigger events, records relevant Rosbag packages for Trigger events, and finally publishes Trigger event topic information to `agent_node`.
 
-## 依赖库
+# Compilation
 
-ros package：
+## Dependencies
+
+ROS packages:
 
 - ai_msgs
 - rclcpp
 - rosbag2_cpp
 - std_msgs
 
-'ai_msgs' 是地平线自定义的消息格式，用于算法模型推理后，发布推理结果，ai_msgs package定义在hobot_msgs中。
+`ai_msgs` is a custom message format by Horizon, used for publishing inference results after algorithm model inference, with the `ai_msgs` package defined in `hobot_msgs`.
 
-'rclcpp' 是 ROS2 中的一个C++客户端库，提供了用于创建 ROS2 节点、订阅和发布话题、调用服务、创建定时器等功能的API。
+`rclcpp` is a C++ client library in ROS2, providing APIs for creating ROS2 nodes, subscribing and publishing topics, invoking services, creating timers, etc.
 
-'rosbag2_cpp' 是 ROS2 中的一个ROSBAG2数据记录和读取 C++ 接口的库。
+`rosbag2_cpp` is a library in ROS2 providing C++ interfaces for ROSBAG2 data recording and reading.
 
-'std_msgs' 是 ROS2 中的一个标准消息包，包含了常用的数据类型，如整数、浮点数、字符串等，用于ROS节点之间的通信。
+`std_msgs` is a standard message package in ROS2 containing common data types like integers, floats, strings, used for communication between ROS nodes.
 
-## 开发环境
+## Development Environment
 
-- 编程语言: C/C++
-- 开发平台: X3
-- 系统版本：Ubuntu 20.04
-- 编译工具链:Linux GCC 9.3.0/Linaro GCC 9.3.0
+- Programming Language: C/C++
+- Development Platform: X3
+- System Version: Ubuntu 20.04
+- Compilation Toolchain: Linux GCC 9.3.0 / Linaro GCC 9.3.0
 
-## 编译
+## Compilation
 
- 支持在X3 Ubuntu系统上编译和在PC上使用docker交叉编译两种方式。
+Supports compilation on X3 Ubuntu system and cross-compilation using Docker on PC.
 
-### 编译选项
+### Compilation Options
 
-1. BUILD_HBMEM
-   - 零拷贝传输方式使能开关。Docker交叉编译时默认打开(ON), 编译时可以通过-DBUILD_HBMEM=OFF关闭。
-   - 在板端编译时，零拷贝传输方式使能开关默认是关闭的。如果需要依赖零拷贝，可以通过-DBUILD_HBMEM=ON打开。
-   - 如果打开，编译会依赖hbm_img_msgs package，并且需要使用tros进行编译。
-   - 如果关闭，编译和运行不依赖hbm_img_msgs pkg，支持使用原生ros和tros进行编译。
-   - 对于零拷贝通信方式，当前只支持订阅nv12格式图片。
+1. **BUILD_HBMEM**
+   - Zero-Copy Transfer Enable Switch. Enabled by default during Docker cross-compilation (ON), can be disabled during compilation with `-DBUILD_HBMEM=OFF`.
+   - On the board-side compilation, the zero-copy transfer method is disabled by default. If zero-copy is required, it can be enabled with `-DBUILD_HBMEM=ON`.
+   - When enabled, compilation depends on the `hbm_img_msgs` package and requires using `tros` for compilation.
+   - When disabled, compilation and execution do not depend on `hbm_img_msgs` package, supporting compilation using native ROS and `tros`.
+   - For zero-copy communication, only subscription to images in the nv12 format is currently supported.
 
-### Ubuntu板端编译X3版本
+### X3 Ubuntu Board-Side Compilation Version
 
-1. 编译环境确认
-   - 板端已安装X3 Ubuntu系统。
-   - 当前编译终端已设置TogetheROS环境变量：`source PATH/setup.bash`。其中PATH为TogetheROS的安装路径。
-   - 已安装ROS2编译工具colcon，安装命令：`pip install -U colcon-common-extensions`
+1. Confirmation of Compilation Environment
+   - X3 Ubuntu system is installed on the board.
+   - The compilation terminal has set TogetheROS environment variables: `source PATH/setup.bash`. Here, `PATH` represents the installation path of TogetheROS.- ROS2 compilation tool colcon has been installed, installation command: `pip install -U colcon-common-extensions`
 
-2. 编译
- 编译命令：`colcon build --packages-select trigger_node_example --cmake-args -DBUILD_HBMEM=ON`
+2. Compilation
+   Compilation command: `colcon build --packages-select trigger_node_example --cmake-args -DBUILD_HBMEM=ON`
 
+### Docker Cross-compilation X3 version
 
-### Docker交叉编译X3版本
+1. Compilation environment confirmation
+   - Compile in docker, and TogetheROS has been installed in docker. For docker installation, cross-compilation instructions, TogetheROS compilation, and deployment instructions, please refer to the README.md in the robot development platform robot_dev_config repository.
 
-1. 编译环境确认
-
-   - 在docker中编译，并且docker中已经安装好TogetheROS。docker安装、交叉编译说明、TogetheROS编译和部署说明详见机器人开发平台robot_dev_config repo中的README.md。
-
-2. 编译
-
-   - 编译命令：
+2. Compilation
+   - Compilation command:
 
 ```shell
 export TARGET_ARCH=aarch64
@@ -78,78 +76,42 @@ colcon build --packages-select trigger_node_example \
 ```
 
 
-## 注意事项
+## Notes
 
-# 使用介绍
+# Instructions for use
 
-## 参数
+## Parameters
 
-| 参数名                 | 类型        | 解释                                        | 是否必须 | 支持的配置           | 默认值                        |
-| ---------------------- | ----------- | ------------------------------------------- | -------- | -------------------- | ----------------------------- |
-| cache_path  | std::string | 缓存在运行环境中的Rosbag文件夹路径 | 否      | 根据实际部署环境配置 | /home/hobot/recorder/ |
-| config_file | std::string | Trigger模块初始化配置文件路径 | 否 | 根据实际部署环境配置 | config/trigger_config.json |
-| format | std::string | Trigger记录Rosbag数据的格式 | 否 | mcap | mcap |
-| isRecord | int | 选择trigger事件是否记录Rosbag数据 | 否 | 1:记录 / 0:不记录 | 0 |
-| agent_msg_sub_topic_name  | std::string | 接收agent_node节点的的topic名 | 否      | 需要与agent_node配置一致 | /hobot_agent |
-| event_msg_sub_topic_name  | std::string | 接收Trigger事件相关话题的topic名 | 是      | 根据实际部署环境配置 |  |
-| msg_pub_topic_name  | std::string | trigger_node发布Trigger事件的话题名 | 否      | 根据实际部署环境配置 | /hobot_trigger |
+| Parameter Name          | Type        | Explanation                               | Required | Supported Configurations | Default Value |
+| ----------------------  | ----------- | ----------------------------------------- | -------- | ------------------------ | ------------- |
+| cache_path              | std::string | Path to the Rosbag folder cached in the runtime environment | No       | Configured according to the actual deployment environment | /home/hobot/recorder/ |
+| config_file             | std::string | Path to the configuration file for initializing the Trigger module | No | Configured according to the actual deployment environment | config/trigger_config.json |
+| format                  | std::string | Format for Trigger to record Rosbag data | No | mcap | mcap |
+| isRecord                | int         | Choose whether to record Rosbag data for Trigger events | No | 1: Record / 0: Do not record | 0 |
+| agent_msg_sub_topic_name| std::string | Topic name to receive messages from the agent_node node | No | Should be consistent with the agent_node configuration | /hobot_agent |
+| event_msg_sub_topic_name| std::string | Topic name to receive Trigger event-related topics | Yes | Configured according to the actual deployment environment |  |
+| msg_pub_topic_name      | std::string | Topic name for trigger_node to publish Trigger events | No | Configured according to the actual deployment environment | /hobot_trigger |
 
-## 注意事项
+## Notes
 
-- config_file配置文件格式为json格式，具体配置如下：
-```json
-  {
-   "domain":"robot",          // Trigger事件domain。如扫地机、人型机等，Trigger类型不同，通过domain区分不同领域类型机器人Trigger。
-   "desc":"trigger lane",     // Trigger模块描述信息。
-   "duration_ts_back":5000,   // 录制Trigger发生后持续时长
-   "duration_ts_front":5000,  // 录制Tirgger 发生前持续时长
-   "level":1,                 // Trigger事件的优先级, 多个不同Trigger发生时, 可利用一个总节点，筛选一些高优或低优的Trigger事件。
-   "src_module_id": 203,      // 发生Trigger的模块ID, 用于管理不同的Trigger模块, 满足业务不同Trigger模块管理需求。
-   "status": 1,               // Trigger状态, '0': 关闭, '1': 打开。
-   "strategy_version": "Robot_sweeper_V1.0_20230526",   // Trigger模块策略的版本号。
-   "topics": ["/image_raw/compressed", "/ai_msg_mono2d_trash_detection"],  // 需要记录的话题list，包含话题名。
-   "trigger_type": 1110,      // Trigger类型ID。每个Trigger模块并不是只有一种触发情况，比如检测到2个垃圾触发是一种类型，检测到3个垃圾是一种类型。
-   "unique_id": "OriginBot002",  // 设备唯一标识
-   "version":"v1.0.0",        // Trigger模块版本信息。
-   "extra_kv":[]              // 其他冗余扩展信息可记录在此。
-  }
-```
-
-## 运行
-
-编译成功后，将生成的install路径拷贝到地平线旭日X3开发板上（如果是在X3上编译，忽略拷贝步骤），并执行如下命令运行：
-
-
-### **Ubuntu X3**
-
-```shell
-export COLCON_CURRENT_PREFIX=./install
-source ./install/setup.bash
-# config中为示例使用的模型，根据实际安装路径进行拷贝
-# 如果是板端编译（无--merge-install编译选项），拷贝命令为cp -r install/PKG_NAME/lib/PKG_NAME/config/ .，其中PKG_NAME为具体的package名。
-cp -r install/lib/trigger_node_example/config/ .
-cp -r install/lib/mono2d_trash_detection/config/ .
-
-# 启动agent node
-ros2 run trigger_node_example trigger_node_example
-
-```
-
-### **Ubuntu X3 Launch启动**
-
-```shell
-export COLCON_CURRENT_PREFIX=./install
-source ./install/setup.bash
-# config中为示例使用的模型，根据实际安装路径进行拷贝
-# 如果是板端编译（无--merge-install编译选项），拷贝命令为cp -r install/PKG_NAME/lib/PKG_NAME/config/ .，其中PKG_NAME为具体的package名。
-cp -r install/lib/trigger_node_example/config/ .
-cp -r install/lib/mono2d_trash_detection/config/ .
-
-export CAM_TYPE=mipi
-
-ros2 launch trigger_node_example hobot_trigger_example.launch.py
-
-```
+- The configuration file config_file is in JSON format, with specific configurations as follows:
+```json```json
+{
+   "domain":"robot",
+   "desc":"trigger lane",
+   "duration_ts_back":5000,
+   "duration_ts_front":5000,
+   "level":1,
+   "src_module_id": 203,
+   "status": 1,
+   "strategy_version": "Robot_sweeper_V1.0_20230526",
+   "topics": ["/image_raw/compressed", "/ai_msg_mono2d_trash_detection"],
+   "trigger_type": 1110,
+   "unique_id": "OriginBot002",
+   "version":"v1.0.0",
+   "extra_kv":[]
+}
+```  ```
 
 ### **Linux X3**
 
@@ -157,17 +119,17 @@ ros2 launch trigger_node_example hobot_trigger_example.launch.py
 export ROS_LOG_DIR=/userdata/
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:./install/lib/
 
-# config中为示例使用的模型，根据实际安装路径进行拷贝
+# Example models in the config folder, copy according to the actual installation path
 cp -r install/lib/trigger_node_example/config/ .
 cp -r install/lib/mono2d_trash_detection/config/ .
 
-# 启动agent node检测node
+# Start the agent node detection node
 ./install/lib/trigger_node_example/trigger_node_example
 ```
 
-# 结果分析
+# Result Analysis
 
-## X3 日志信息
+## X3 Log Information
 
 ```bash
    [INFO] [launch]: All log files can be found below /root/.ros/log/2023-05-13-17-31-53-158704-ubuntu-2981490
@@ -190,35 +152,34 @@ cp -r install/lib/mono2d_trash_detection/config/ .
    [trigger_node_example-1]  Report message: {"domain":"","desc":"trigger lane","duration_ts_back":5000,"duration_ts_front":5000,"level":1,"rosbag_path":"trigger/OriginBot002_20230513-173155-931/OriginBot002_20230513-173155-931_0.mcap","src_module_id":203,"timestamp":1683970315931,"topic":["/image_raw/compressed","/ai_msg_mono2d_trash_detection"],"trigger_type":1110,"unique_id":"OriginBot002","version":"v1.0.0"}
 ```
 
+# Extended Functionality
 
-# 拓展功能
+## Dispatching Tasks to the Trigger Module
 
-## 给Trigger模块下发任务
+The Trigger module supports the dispatch of Trigger tasks by other nodes to control Trigger configurations. The dispatch is done by publishing on the std_msg topic, sending the task protocol to the Trigger module.
 
-Trigger模块支持由其他节点下发Trigger任务,控制Trigger配置。下发方式,通过发布std_msg的话题,将任务协议发送到Trigger模块。
-
-### Trigger任务协议
-```json
+### Trigger Task Protocol
+``````json
 {
-   "version": "v0.0.1_20230421",       // Trigger模块版本信息。
-   "trigger_status": true,             // Trigger状态, '0': 关闭, '1': 打开。
+   "version": "v0.0.1_20230421",       // Trigger module version information.
+   "trigger_status": true,             // Trigger status, '0': off, '1': on.
    "strategy": [
       {
-            "src_module_id": 203,      // 发生Trigger的模块ID
-            "trigger_type": 1110,      // Trigger类型ID。
-            "level": 1,                // Trigger事件的优先级
-            "desc": "",                // Trigger模块描述信息。
-            "duration_ts_back": 5000,  // 录制Trigger发生后持续时长
-            "duration_ts_front": 3000  // 录制Tirgger 发生前持续时长
+            "src_module_id": 203,      // Module ID where Trigger occurs.
+            "trigger_type": 1110,      // Trigger type ID.
+            "level": 1,                // Priority of Trigger event.
+            "desc": "",                // Description of Trigger module.
+            "duration_ts_back": 5000,  // Duration of recording after Trigger occurs.
+            "duration_ts_front": 3000  // Duration of recording before Trigger occurs.
       }
    ]
 }
 ```
 
 
-### 运行
+### Run
 
-在前面启动Trigger节点基础上,在另一个终端,发布话题名为"/hobot_agent"的std_msg话题消息。
+On top of starting the Trigger node, in another terminal, publish a topic message with the topic name "/hobot_agent" using std_msgs/String type.
 ```shell
 export COLCON_CURRENT_PREFIX=./install
 source ./install/setup.bash
@@ -226,7 +187,7 @@ source ./install/setup.bash
 ros2 topic pub /hobot_agent std_msgs/String "data: '{\"version\":\"v0.0.1_20230421\",\"trigger_status\":true,\"strategy\":[{\"src_module_id\":203,\"trigger_type\":1110,\"status\":true,\"level\":1,\"desc\":\"test\",\"duration_ts_back\":5000,\"duration_ts_front\":3000}]}'"
 ```
 
-### 日志信息
+### Log Information
 ```shell
    [WARN] [1691670626.026737642] [hobot_trigger]: TriggerNode Init Succeed!
    [WARN] [1691670626.026859316] [example]: TriggerExampleNode Init.

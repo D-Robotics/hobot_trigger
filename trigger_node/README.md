@@ -1,68 +1,65 @@
-# 功能介绍
+English| [简体中文](./README_cn.md)
 
-trigger_node package 是地平线基于Ros2开发的Trigger基础模块，用于在触发Trigger事件后，获取指定Rosbag数据的功能包。所谓Trigger，是在设定好已有Trigger机制基础上，监测Trigger模块订阅的消息变化，例如检测框结果数量变化，小车控制信息变化等，触发对应Trigger事件，记录指定时间区间内的Ros2消息，从而帮助开发人员定位和复现机器人场景中的感知、规控等问题。
+# Function Introduction
 
-本package支持直接订阅std_msg/msg/String类型的话题，用以接受agent_node模块发出的Trigger模块控制信息，同时也通过发布std_msg/msg/String类型的话题，将Trigger事件上报给agent_node，进一步上传到云端。
+**trigger_node package** is a Trigger basic module developed by Horizon Robotics based on Ros2. It is used to obtain specified Rosbag data after triggering Trigger events. The so-called Trigger is to monitor the changes of messages subscribed by the Trigger module based on the set Trigger mechanism, such as detecting changes in the number of detection frame results, changes in vehicle control information, etc., triggering corresponding Trigger events, and recording Ros2 messages within the specified time interval, thereby helping developers locate and reproduce perception, motion control, and other issues in robot scenes.
 
-在此基础上，本package功能支持开发者在不使用地平线机器人云开发平台（艾迪平台）基础上使用，所记录的Trigger信息将保存在本地。
+This package supports directly subscribing to topics of type `std_msgs/msg/String`, in order to receive Trigger module control information sent by the `agent_node` module. At the same time, it also publishes topics of type `std_msgs/msg/String` to report Trigger events to the `agent_node`, further uploading them to the cloud.
 
+On this basis, the functionality of this package supports developers to use the recorded Trigger information locally without using the Horizon Robotics robot cloud development platform (Eddie Platform).
 
-# 编译
+# Compilation
 
-## 依赖库
+## Dependencies
 
-ros package：
+ROS package:
 
 - rclcpp
 - rosbag2_cpp
 - std_msgs
 
-'rclcpp' 是 ROS2 中的一个C++客户端库，提供了用于创建 ROS2 节点、订阅和发布话题、调用服务、创建定时器等功能的API。
+'rclcpp' is a C++ client library in ROS2, which provides APIs for creating ROS2 nodes, subscribing and publishing topics, calling services, creating timers, and more.
 
-'rosbag2_cpp' 是 ROS2 中的一个ROSBAG2数据记录和读取 C++ 接口的库。
+'rosbag2_cpp' is a C++ interface library for ROSBAG2 data recording and reading in ROS2.
 
-'std_msgs' 是 ROS2 中的一个标准消息包，包含了常用的数据类型，如整数、浮点数、字符串等，用于ROS节点之间的通信。
+'std_msgs' is a standard message package in ROS2, containing common data types such as integers, floats, strings, etc., used for communication between ROS nodes.
 
-## 开发环境
+## Development Environment
 
-- 编程语言: C/C++
-- 开发平台: X3/X86
-- 系统版本：Ubuntu 20.04
-- 编译工具链:Linux GCC 9.3.0/Linaro GCC 9.3.0
+- Programming Language: C/C++
+- Development Platform: X3/X86
+- System Version: Ubuntu 20.04
+- Compilation Toolchain: Linux GCC 9.3.0 / Linaro GCC 9.3.0
 
-## 编译
+## Compilation
 
- 支持在X3 Ubuntu系统上编译和在PC上使用docker交叉编译两种方式。
+Supports compilation on X3 Ubuntu system and cross-compilation using Docker on PC.
 
-### 编译选项
+### Compilation Options
 
 1. BUILD_HBMEM
-   - 零拷贝传输方式使能开关。Docker交叉编译时默认打开(ON), 编译时可以通过-DBUILD_HBMEM=OFF关闭。
-   - 在板端编译时，零拷贝传输方式使能开关默认是关闭的。如果需要依赖零拷贝，可以通过-DBUILD_HBMEM=ON打开。
-   - 如果打开，编译会依赖hbm_img_msgs package，并且需要使用tros进行编译。
-   - 如果关闭，编译和运行不依赖hbm_img_msgs pkg，支持使用原生ros和tros进行编译。
-   - 对于零拷贝通信方式，当前只支持订阅nv12格式图片。
+   - Enables zero-copy transmission. It is enabled by default when cross-compiling with Docker (ON), and can be turned off during compilation by using `-DBUILD_HBMEM=OFF`.
+   - By default, zero-copy transmission is disabled during compilation on the board. If zero-copy is required, it can be enabled with `-DBUILD_HBMEM=ON`.
+   - When enabled, compilation depends on the 'hbm_img_msgs' package and requires the use of 'tros' for compilation.
+   - When disabled, compilation and execution do not depend on the 'hbm_img_msgs' package, supporting compilation using native ROS and 'tros'.
+   - For zero-copy communication, only the subscription of nv12 formatted images is currently supported.
 
-### Ubuntu板端编译X3版本
+### Compilation of Ubuntu Board Version on X3
 
-1. 编译环境确认
-   - 板端已安装X3 Ubuntu系统。
-   - 当前编译终端已设置TogetheROS环境变量：`source PATH/setup.bash`。其中PATH为TogetheROS的安装路径。
-   - 已安装ROS2编译工具colcon，安装命令：`pip install -U colcon-common-extensions`
+1. Compilation Environment Confirmation
+   - X3 Ubuntu system is installed on the board.
+   - The current compilation terminal has set the TogetheROS environment variable: `source PATH/setup.bash`. Where PATH is the installation path of TogetheROS.- ROS2 compilation tool colcon has been installed, installation command: `pip install -U colcon-common-extensions`
 
-2. 编译
- 编译命令：`colcon build --packages-select trigger_node --cmake-args -DBUILD_HBMEM=ON`
+2. Compilation
+   Compilation command: `colcon build --packages-select trigger_node --cmake-args -DBUILD_HBMEM=ON`
 
+### Docker Cross-compilation X3 version
 
-### Docker交叉编译X3版本
+1. Compilation environment confirmation
+   - Compilation in docker, and TogetheROS has been installed in docker. For docker installation, cross-compilation instructions, TogetheROS compilation and deployment instructions, please refer to the README.md in the robot development platform robot_dev_config repo.
 
-1. 编译环境确认
-
-   - 在docker中编译，并且docker中已经安装好TogetheROS。docker安装、交叉编译说明、TogetheROS编译和部署说明详见机器人开发平台robot_dev_config repo中的README.md。
-
-2. 编译
-
-   - 编译命令：
+2. Compilation
+   - Compilation command:
 
 ```shell
 export TARGET_ARCH=aarch64
@@ -77,15 +74,13 @@ colcon build --packages-select trigger_node \
    -DCMAKE_TOOLCHAIN_FILE=`pwd`/robot_dev_config/aarch64_toolchainfile.cmake
 ```
 
-### X86 Ubuntu系统上编译 X86版本
+### Compilation of X86 Version on X86 Ubuntu System
 
-1. 编译环境确认
+1. Compilation environment confirmation
+   - X86 Ubuntu version: ubuntu20.04
 
-   - x86 ubuntu版本: ubuntu20.04
-
-2. 编译
-
-   - 编译命令：
+2. Compilation
+   - Compilation command:
 
    ```shell
    colcon build --packages-select trigger_node  \
@@ -96,43 +91,41 @@ colcon build --packages-select trigger_node \
       -DTHIRD_PARTY=`pwd`/../sysroot_docker \
    ```
 
-## 注意事项
+## Notes# Usage Introduction
 
-# 使用介绍
+## Parameters
 
-## 参数
+| Parameter Name        | Type         | Explanation                                    | Required | Supported Configurations  | Default Value           |
+| --------------------- | ------------ | ---------------------------------------------- | -------- | ------------------------- | ------------------------ |
+| cache_path            | std::string  | Path to the Rosbag folder cached in the runtime environment | No       | Configured based on actual deployment environment | /home/hobot/recorder/ |
+| config_file           | std::string  | Path to the initialization configuration file of the Trigger module | No       | Configured based on actual deployment environment | config/trigger_config.json |
+| format                | std::string  | Format in which Trigger records Rosbag data | No       | mcap | mcap |
+| isRecord              | int          | Choose whether to record Rosbag data for trigger events | No       | 1: record / 0: not record | 0 |
+| agent_msg_sub_topic_name | std::string | Topic name to receive from agent_node | No       | Should be consistent with agent_node configuration | /hobot_agent |
+| event_msg_sub_topic_name | std::string | Topic name to receive Trigger event related topics | Yes      | Configured based on actual deployment environment |  |
+| msg_pub_topic_name    | std::string  | Topic name for trigger_node to publish Trigger events | No       | Configured based on actual deployment environment | /hobot_trigger |
 
-| 参数名                 | 类型        | 解释                                        | 是否必须 | 支持的配置           | 默认值                        |
-| ---------------------- | ----------- | ------------------------------------------- | -------- | -------------------- | ----------------------------- |
-| cache_path  | std::string | 缓存在运行环境中的Rosbag文件夹路径 | 否      | 根据实际部署环境配置 | /home/hobot/recorder/ |
-| config_file | std::string | Trigger模块初始化配置文件路径 | 否 | 根据实际部署环境配置 | config/trigger_config.json |
-| format | std::string | Trigger记录Rosbag数据的格式 | 否 | mcap | mcap |
-| isRecord | int | 选择trigger事件是否记录Rosbag数据 | 否 | 1:记录 / 0:不记录 | 0 |
-| agent_msg_sub_topic_name  | std::string | 接收agent_node节点的的topic名 | 否      | 需要与agent_node配置一致 | /hobot_agent |
-| event_msg_sub_topic_name  | std::string | 接收Trigger事件相关话题的topic名 | 是      | 根据实际部署环境配置 |  |
-| msg_pub_topic_name  | std::string | trigger_node发布Trigger事件的话题名 | 否      | 根据实际部署环境配置 | /hobot_trigger |
+## Notes
 
-## 注意事项
-
-- config_file配置文件格式为json格式，具体配置如下：
+- The config_file configuration file is in JSON format, with specific configurations as follows:
 ```json
   {
-   "domain":"robot",          // Trigger事件domain。如扫地机、人型机等，Trigger类型不同，通过domain区分不同领域类型机器人Trigger。
-   "desc":"trigger lane",     // Trigger模块描述信息。
-   "duration_ts_back":5000,   // 录制Trigger发生后持续时长
-   "duration_ts_front":5000,  // 录制Tirgger 发生前持续时长
-   "level":1,                 // Trigger事件的优先级, 多个不同Trigger发生时, 可利用一个总节点，筛选一些高优或低优的Trigger事件。
-   "src_module_id": 203,      // 发生Trigger的模块ID, 用于管理不同的Trigger模块, 满足业务不同Trigger模块管理需求。
-   "status": 1,               // Trigger状态, '0': 关闭, '1': 打开。
-   "strategy_version": "Robot_sweeper_V1.0_20230526",   // Trigger模块策略的版本号。
-   "topics": ["/image_raw/compressed", "/ai_msg_mono2d_trash_detection"],  // 需要记录的话题list，包含话题名。
-   "trigger_type": 1110,      // Trigger类型ID。每个Trigger模块并不是只有一种触发情况，比如检测到2个垃圾触发是一种类型，检测到3个垃圾是一种类型。
-   "unique_id": "OriginBot002",  // 设备唯一标识
-   "version":"v1.0.0",        // Trigger模块版本信息。
-   "extra_kv":[]              // 其他冗余扩展信息可记录在此。
-  }
+   "domain":"robot",
+   "desc":"trigger lane",
+   "duration_ts_back":5000,
+   "duration_ts_front":5000,
+   "level":1,
+   "src_module_id": 203,
+   "status": 1,
+   "strategy_version": "Robot_sweeper_V1.0_20230526",
+   "topics": ["/image_raw/compressed", "/ai_msg_mono2d_trash_detection"],
+   "trigger_type": 1110,
+   "unique_id": "OriginBot002",
+   "version":"v1.0.0",
+   "extra_kv":[]
+   }
 ```
 
-## 运行
+## Running
 
-编译成功后，将在install路径下生成对应 libtrigger_node.so 动态链接库，作为trigger模块的基类，trigger_node 并不可以直接运行使用，在本代码仓库中，我们提供了 trigger_node_example 作为trigger模块使用的示例，请移步到对应仓库路径下使用体验。
+After successful compilation, the corresponding `libtrigger_node.so` shared library will be generated in the install path as the base class of the trigger module. `trigger_node` cannot be directly run and used. In this code repository, we provide `trigger_node_example` as an example for using the trigger module. Please go to the corresponding repository path for usage experience.

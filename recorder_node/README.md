@@ -1,60 +1,59 @@
-# 功能介绍
+English| [简体中文](./README_cn.md)
 
-recorder_node package 是地平线基于Ros2开发的Rosbag数据缓存管理功能包。主要功能，是记录话题数据，为 recorder_node 模块提供Rosbag缓存数据。同时通过缓存管理方式，通过定时任务清理不再需要保存的Rosbag数据，保证运行环境资源空间充足，同时便于Trigger模块快速截取指定时间区间Rosbag数据。
+# Function Introduction
 
-# 编译
+The `recorder_node` package is a Ros2-based Rosbag data caching management package developed by Horizon Robotics. Its main function is to record topic data and provide Rosbag cached data for the `recorder_node` module. By managing the cache, unnecessary Rosbag data can be cleaned up through scheduled tasks to ensure that there is sufficient space in the operating environment resources, and it is also convenient for the Trigger module to quickly capture Rosbag data within a specified time interval.
 
-## 依赖库
+# Compilation
 
-ros package：
+## Dependencies
+
+ROS packages:
 
 - rclcpp
 - rosbag2_cpp
 
-'rclcpp' 是 ROS2 中的一个C++客户端库，提供了用于创建 ROS2 节点、订阅和发布话题、调用服务、创建定时器等功能的API。
+`rclcpp` is a C++ client library in ROS2 that provides APIs for creating ROS2 nodes, subscribing and publishing topics, calling services, creating timers, and more.
 
-'rosbag2_cpp' 是 ROS2 中的一个ROSBAG2数据记录和读取 C++ 接口的库。
+`rosbag2_cpp` is a library in ROS2 that provides a C++ interface for recording and reading ROSBAG2 data.
 
-## 开发环境
+## Development Environment
 
-- 编程语言: C/C++
-- 开发平台: X3/X86
-- 系统版本：Ubuntu 20.04
-- 编译工具链:Linux GCC 9.3.0/Linaro GCC 9.3.0
+- Programming Language: C/C++
+- Development Platform: X3/X86
+- System Version: Ubuntu 20.04
+- Compilation Toolchain: Linux GCC 9.3.0/Linaro GCC 9.3.0
 
-## 编译
+## Compilation
 
- 支持在X3 Ubuntu系统上编译和在PC上使用docker交叉编译两种方式。
+Supports compiling on X3 Ubuntu system and cross-compiling with Docker on PC.
 
-### 编译选项
+### Compilation Options
 
 1. BUILD_HBMEM
-   - 零拷贝传输方式使能开关。Docker交叉编译时默认打开(ON), 编译时可以通过-DBUILD_HBMEM=OFF关闭。
-   - 在板端编译时，零拷贝传输方式使能开关默认是关闭的。如果需要依赖零拷贝，可以通过-DBUILD_HBMEM=ON打开。
-   - 如果打开，编译会依赖hbm_img_msgs package，并且需要使用tros进行编译。
-   - 如果关闭，编译和运行不依赖hbm_img_msgs pkg，支持使用原生ros和tros进行编译。
-   - 对于零拷贝通信方式，当前只支持订阅nv12格式图片。
+   - Switch to enable zero-copy transmission. It is enabled by default when cross-compiling with Docker (ON) and can be turned off during compilation with `-DBUILD_HBMEM=OFF`.
+   - When compiling on the board, the zero-copy transmission switch is off by default. If zero-copy is needed, it can be enabled with `-DBUILD_HBMEM=ON`.
+   - If enabled, the compilation will depend on the `hbm_img_msgs` package and tros will be needed for compilation.
+   - If disabled, compilation and execution will not depend on the `hbm_img_msgs` package, supporting compilation with native ROS and tros.
+   - Currently, zero-copy communication only supports subscribing to images in nv12 format.
 
-### Ubuntu板端编译X3版本
+### Compilation for X3 Ubuntu Board
 
-1. 编译环境确认
-   - 板端已安装X3 Ubuntu系统。
-   - 当前编译终端已设置TogetheROS环境变量：`source PATH/setup.bash`。其中PATH为TogetheROS的安装路径。
-   - 已安装ROS2编译工具colcon，安装命令：`pip install -U colcon-common-extensions`
+1. Compilation Environment Setup
+   - Ensure that the X3 Ubuntu system is installed on the board.
+   - The compilation terminal has set the TogetheROS environment variable: `source PATH/setup.bash`. Replace PATH with the installation path of TogetheROS.
+   - Install ROS2 compilation tool colcon with command: `pip install -U colcon-common-extensions`
 
-2. 编译
- 编译命令：`colcon build --packages-select recorder_node --cmake-args -DBUILD_HBMEM=ON`
+2. Compilation
+   Compilation command: `colcon build --packages-select recorder_node --cmake-args -DBUILD_HBMEM=ON`
 
+### Docker Cross-Compilation for X3 Version1. Compilation Environment Confirmation
 
-### Docker交叉编译X3版本
+   - Compile in docker, with TogetheROS installed in the docker environment. For instructions on docker installation, cross-compilation, TogetheROS compilation, and deployment, please refer to the README.md in the robot development platform's robot_dev_config repo.
 
-1. 编译环境确认
+2. Compilation
 
-   - 在docker中编译，并且docker中已经安装好TogetheROS。docker安装、交叉编译说明、TogetheROS编译和部署说明详见机器人开发平台 robot_dev_config repo中的README.md。
-
-2. 编译
-
-   - 编译命令：
+   - Compilation command:
 
 ```shell
 export TARGET_ARCH=aarch64
@@ -69,15 +68,15 @@ colcon build --packages-select recorder_node \
    -DCMAKE_TOOLCHAIN_FILE=`pwd`/robot_dev_config/aarch64_toolchainfile.cmake
 ```
 
-### X86 Ubuntu系统上编译 X86版本
+### Compiling on X86 Ubuntu System for X86 Version
 
-1. 编译环境确认
+1. Compilation Environment Confirmation
 
-   - x86 ubuntu版本: ubuntu20.04
+   - X86 Ubuntu Version: Ubuntu 20.04
 
-2. 编译
+2. Compilation
 
-   - 编译命令：
+   - Compilation command:
 
    ```shell
    colcon build --packages-select recorder_node  \
@@ -88,23 +87,22 @@ colcon build --packages-select recorder_node \
       -DTHIRD_PARTY=`pwd`/../sysroot_docker \
    ```
 
-## 注意事项
+## Notes
 
-# 使用介绍
+# User Guide
 
-## 参数
+## Parameters
 
-| 参数名                 | 类型        | 解释                                        | 是否必须 | 支持的配置           | 默认值                        |
-| ---------------------- | ----------- | ------------------------------------------- | -------- | -------------------- | ----------------------------- |
-| cache_path  | std::string | 缓存在运行环境中的rosbag文件夹路径 | 否 | 根据实际部署环境配置 | /home/hobot/recorder/ |
-| cache_time | long | 缓存数据保留的时间(单位:ms) | 否 | 根据实际部署环境配置 | 60000 |
-| cycle_time | long | 清理缓存数据循环的时间(单位:s) | 否 | 根据实际部署环境配置 | 60 |
-| format | std::string | 记录rosbag数据的格式 | 否 | mcap | mcap |
-| mag_bag_size | long | rosbag每个缓存数据包大小(单位:bit) | 否 | 根据实际部署环境配置 | 524288000 |
+| Parameter Name | Type         | Description                                 | Required | Supported Configurations | Default Value               |
+| -------------- | ------------ | ------------------------------------------- | -------- | ------------------------ | --------------------------- |
+| cache_path     | std::string  | Path to the rosbag folder cached in the runtime environment | No       | Configured based on actual deployment environment | /home/hobot/recorder/      |
+| cache_time     | long         | Time to retain cached data (unit: ms)       | No       | Configured based on actual deployment environment | 60000                        || cycle_time | long | Cycle time for clearing cache data (unit: s) | No | Configured based on actual deployment environment | 60 |
+| format | std::string | Format of recording rosbag data | No | mcap | mcap |
+| mag_bag_size | long | Size of each cached data package in rosbag (unit: bit) | No | Configured based on actual deployment environment | 524288000 |
 
-## 运行
+## Running
 
-编译成功后，将生成的install路径拷贝到地平线旭日X3开发板上（如果是在X3上编译，忽略拷贝步骤），并执行如下命令运行：
+After successful compilation, copy the generated installation path to the Horizon X3 development board (ignore the copying step if compiling on X3), and run the following commands:
 
 
 ### **Ubuntu X3**
@@ -113,18 +111,18 @@ colcon build --packages-select recorder_node \
 export COLCON_CURRENT_PREFIX=./install
 source ./install/setup.bash
 
-# 启动recorder node
+# Start the recorder node
 ros2 run recorder_node recorder_node
 
 ```
 
-### **Ubuntu X3 Launch启动**
+### **Ubuntu X3 Launch Start**
 
 ```shell
 export COLCON_CURRENT_PREFIX=./install
 source ./install/setup.bash
 
-# 启动recorder node
+# Start the recorder node
 ros2 launch recorder_node hobot_recorder.launch.py
 ```
 
@@ -134,21 +132,20 @@ ros2 launch recorder_node hobot_recorder.launch.py
 export ROS_LOG_DIR=/userdata/
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:./install/lib/
 
-# 启动recorder node检测node
+# Start the recorder node detection node
 ./install/lib/recorder_node/recorder_node
 ```
 
-# 结果分析
+# Results Analysis
 
-## X3 日志信息
+## X3 Log Information
 
 ```bash
 [INFO] [launch]: All log files can be found below /root/.ros/log/2023-05-31-18-30-18-237313-ubuntu-521540
 [INFO] [launch]: Default logging verbosity is set to INFO
 [INFO] [recorder_node-1]: process started with pid [521816]
 [recorder_node-1] [WARN] [1685529019.332386609] [RecorderNode]: This is hobot recorder node!
-[recorder_node-1] [WARN] [1685529019.449256848] [RecorderNode]: Parameter:
-[recorder_node-1]  cache_path: /home/hobot/recorder/
+[recorder_node-1] [WARN] [1685529019.449256848] [RecorderNode]: Parameter:[recorder_node-1]  cache_path: /home/hobot/recorder/
 [recorder_node-1]  cache_time(unit: ms): 60000
 [recorder_node-1]  cycle_time(unit: s): 60
 [recorder_node-1]  format: mcap
@@ -161,4 +158,3 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:./install/lib/
 [recorder_node-1] [INFO] [1685529023.522887125] [rosbag2_transport]: Subscribed to topic '/hbmem_img0x22011208050701201313080305190b1b'
 [recorder_node-1] [INFO] [1685529023.542508750] [rosbag2_transport]: Subscribed to topic '/camera_info'
 [recorder_node-1] [INFO] [1685529023.613529769] [rosbag2_transport]: Subscribed to topic '/ai_msg_mono2d_trash_detection'
-```
