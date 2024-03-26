@@ -49,7 +49,8 @@ Supports compilation on X3 Ubuntu system and cross-compilation using Docker on P
 
 1. Confirmation of Compilation Environment
    - X3 Ubuntu system is installed on the board.
-   - The compilation terminal has set TogetheROS environment variables: `source PATH/setup.bash`. Here, `PATH` represents the installation path of TogetheROS.- ROS2 compilation tool colcon has been installed, installation command: `pip install -U colcon-common-extensions`
+   - The compilation terminal has set TogetheROS environment variables: `source PATH/setup.bash`. Here, `PATH` represents the installation path of TogetheROS.
+   - ROS2 compilation tool colcon has been installed, installation command: `pip install -U colcon-common-extensions`
 
 2. Compilation
    Compilation command: `colcon build --packages-select trigger_node_example --cmake-args -DBUILD_HBMEM=ON`
@@ -95,7 +96,7 @@ colcon build --packages-select trigger_node_example \
 ## Notes
 
 - The configuration file config_file is in JSON format, with specific configurations as follows:
-```json```json
+```json
 {
    "domain":"robot",
    "desc":"trigger lane",
@@ -111,7 +112,42 @@ colcon build --packages-select trigger_node_example \
    "version":"v1.0.0",
    "extra_kv":[]
 }
-```  ```
+```
+## Run
+
+After successful compilation, copy the generated install path to the Sunrise X3 development board (if compiling on X3, ignore the copy step), and execute the following command to run:
+
+
+### **Ubuntu X3**
+
+```shell
+export COLCON_CURRENT_PREFIX=./install
+source ./install/setup.bash
+# The model used in the example in config is copied based on the actual installation path
+# If it is a board side compilation (without the -- merge install compilation option), the copy command is cp -r install/PKG_NAME/lib/PKG_NAME/config/ ., Among them, PKG_NAME is the specific package name.
+cp -r install/lib/trigger_node_example/config/ .
+cp -r install/lib/mono2d_trash_detection/config/ .
+
+# Start agent node
+ros2 run trigger_node_example trigger_node_example
+
+```
+
+### **Ubuntu X3 Launch**
+
+```shell
+export COLCON_CURRENT_PREFIX=./install
+source ./install/setup.bash
+# The model used in the example in config is copied based on the actual installation path
+# If it is a board side compilation (without the -- merge install compilation option), the copy command is cp -r install/PKG_NAME/lib/PKG_NAME/config/ ., Among them, PKG_NAME is the specific package name.
+cp -r install/lib/trigger_node_example/config/ .
+cp -r install/lib/mono2d_trash_detection/config/ .
+
+export CAM_TYPE=mipi
+
+ros2 launch trigger_node_example hobot_trigger_example.launch.py
+
+```
 
 ### **Linux X3**
 
@@ -159,7 +195,7 @@ cp -r install/lib/mono2d_trash_detection/config/ .
 The Trigger module supports the dispatch of Trigger tasks by other nodes to control Trigger configurations. The dispatch is done by publishing on the std_msg topic, sending the task protocol to the Trigger module.
 
 ### Trigger Task Protocol
-``````json
+```json
 {
    "version": "v0.0.1_20230421",       // Trigger module version information.
    "trigger_status": true,             // Trigger status, '0': off, '1': on.
