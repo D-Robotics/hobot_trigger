@@ -48,7 +48,8 @@ Supports compilation on X3 Ubuntu system and cross-compilation using Docker on P
 
 1. Compilation Environment Confirmation
    - X3 Ubuntu system is installed on the board.
-   - The current compilation terminal has set the TogetheROS environment variable: `source PATH/setup.bash`. Where PATH is the installation path of TogetheROS.- ROS2 compilation tool colcon has been installed, installation command: `pip install -U colcon-common-extensions`
+   - The current compilation terminal has set the TogetheROS environment variable: `source PATH/setup.bash`. Where PATH is the installation path of TogetheROS.
+   - ROS2 compilation tool colcon has been installed, installation command: `pip install -U colcon-common-extensions`
 
 2. Compilation
    Compilation command: `colcon build --packages-select trigger_node --cmake-args -DBUILD_HBMEM=ON`
@@ -110,19 +111,19 @@ colcon build --packages-select trigger_node \
 - The config_file configuration file is in JSON format, with specific configurations as follows:
 ```json
   {
-   "domain":"robot",
-   "desc":"trigger lane",
-   "duration_ts_back":5000,
-   "duration_ts_front":5000,
-   "level":1,
-   "src_module_id": 203,
-   "status": 1,
-   "strategy_version": "Robot_sweeper_V1.0_20230526",
-   "topics": ["/image_raw/compressed", "/ai_msg_mono2d_trash_detection"],
-   "trigger_type": 1110,
-   "unique_id": "OriginBot002",
-   "version":"v1.0.0",
-   "extra_kv":[]
+   "domain":"robot",                             //Trigger event domain. Triggers of different types, such as vacuum cleaners and humanoid robots, are distinguished by domain to distinguish between different types of robots in different fields
+   "desc":"trigger lane",                        //Trigger module description information
+   "duration_ts_back":5000,                       //Record the duration of Trigger occurrence
+   "duration_ts_front":5000,                     //Record the duration before the occurrence of Tiger
+   "level":1,                                    //The priority of Trigger events. When multiple different Triggers occur, a total node can be used to filter out some high or low priority Trigger events
+   "src_module_id": 203,                          //The module ID where the Trigger occurred, used to manage different Trigger modules and meet the management needs of different Trigger modules in the business
+   "status": 1,                                    //Trigger status, '0': closed, '1': open
+   "strategy_version": "Robot_sweeper_V1.0_20230526",   //The version number of the Trigger module policy
+   "topics": ["/image_raw/compressed", "/ai_msg_mono2d_trash_detection"],   //A list of topics to be recorded, including topic names
+   "trigger_type": 1110,                            //Trigger type ID. Each Trigger module does not have only one triggering situation, for example, detecting 2 garbage triggers is of the same type, and detecting 3 garbage triggers is of the same type
+   "unique_id": "OriginBot002",                     //Device Unique Identification
+   "version":"v1.0.0",                              //Trigger module version information
+   "extra_kv":[]                                    //Trigger module version and other redundant extension information can be recorded here
    }
 ```
 
