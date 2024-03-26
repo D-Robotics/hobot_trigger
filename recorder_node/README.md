@@ -47,7 +47,8 @@ Supports compiling on X3 Ubuntu system and cross-compiling with Docker on PC.
 2. Compilation
    Compilation command: `colcon build --packages-select recorder_node --cmake-args -DBUILD_HBMEM=ON`
 
-### Docker Cross-Compilation for X3 Version1. Compilation Environment Confirmation
+### Docker Cross-Compilation for X3 Version
+1. Compilation Environment Confirmation
 
    - Compile in docker, with TogetheROS installed in the docker environment. For instructions on docker installation, cross-compilation, TogetheROS compilation, and deployment, please refer to the README.md in the robot development platform's robot_dev_config repo.
 
@@ -96,7 +97,8 @@ colcon build --packages-select recorder_node \
 | Parameter Name | Type         | Description                                 | Required | Supported Configurations | Default Value               |
 | -------------- | ------------ | ------------------------------------------- | -------- | ------------------------ | --------------------------- |
 | cache_path     | std::string  | Path to the rosbag folder cached in the runtime environment | No       | Configured based on actual deployment environment | /home/hobot/recorder/      |
-| cache_time     | long         | Time to retain cached data (unit: ms)       | No       | Configured based on actual deployment environment | 60000                        || cycle_time | long | Cycle time for clearing cache data (unit: s) | No | Configured based on actual deployment environment | 60 |
+| cache_time     | long         | Time to retain cached data (unit: ms)       | No       | Configured based on actual deployment environment | 60000                        |
+| cycle_time | long | Cycle time for clearing cache data (unit: s) | No | Configured based on actual deployment environment | 60 |
 | format | std::string | Format of recording rosbag data | No | mcap | mcap |
 | mag_bag_size | long | Size of each cached data package in rosbag (unit: bit) | No | Configured based on actual deployment environment | 524288000 |
 
