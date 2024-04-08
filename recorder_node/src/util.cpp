@@ -25,7 +25,6 @@ int RecordName2Number(const std::string& str) {
   // 查找".mcap"的位置
   size_t dotMcapPos = str.find(".mcap");
   if (dotMcapPos == std::string::npos) {
-    // std::cout << ".mcap not found" << std::endl;
     return 0;
   }
   

@@ -51,7 +51,7 @@ public:
 
 private:
 
-  std::string cache_path_ = "/home/hobot/recorder/";
+  std::string cache_path_ = "/home/robot/recorder/";
   long cache_time_ = 60000;
   long cycle_time_ = 60;
   std::string format_ = "mcap";       // mcap or sqlite3

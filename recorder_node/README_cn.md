@@ -98,7 +98,7 @@ colcon build --packages-select recorder_node \
 
 | 参数名                 | 类型        | 解释                                        | 是否必须 | 支持的配置           | 默认值                        |
 | ---------------------- | ----------- | ------------------------------------------- | -------- | -------------------- | ----------------------------- |
-| cache_path  | std::string | 缓存在运行环境中的rosbag文件夹路径 | 否 | 根据实际部署环境配置 | /home/hobot/recorder/ |
+| cache_path  | std::string | 缓存在运行环境中的rosbag文件夹路径 | 否 | 根据实际部署环境配置 | /home/robot/recorder/ |
 | cache_time | long | 缓存数据保留的时间(单位:ms) | 否 | 根据实际部署环境配置 | 60000 |
 | cycle_time | long | 清理缓存数据循环的时间(单位:s) | 否 | 根据实际部署环境配置 | 60 |
 | format | std::string | 记录rosbag数据的格式 | 否 | mcap | mcap |
@@ -116,8 +116,7 @@ export COLCON_CURRENT_PREFIX=./install
 source ./install/setup.bash
 
 # 启动recorder node
-ros2 run recorder_node recorder_node
-
+ros2 run recorder_node recorder_node --ros-args -p format:=mcap
 ```
 
 ### **Ubuntu X3 Launch启动**
@@ -150,7 +149,7 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:./install/lib/
 [INFO] [recorder_node-1]: process started with pid [521816]
 [recorder_node-1] [WARN] [1685529019.332386609] [RecorderNode]: This is hobot recorder node!
 [recorder_node-1] [WARN] [1685529019.449256848] [RecorderNode]: Parameter:
-[recorder_node-1]  cache_path: /home/hobot/recorder/
+[recorder_node-1]  cache_path: /home/robot/recorder/
 [recorder_node-1]  cache_time(unit: ms): 60000
 [recorder_node-1]  cycle_time(unit: s): 60
 [recorder_node-1]  format: mcap

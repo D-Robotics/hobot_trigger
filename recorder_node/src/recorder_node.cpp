@@ -81,7 +81,7 @@ int RecorderNode::Record() {
   command += " -b " + std::to_string(mag_bag_size_);
   command += " -o " + cache_path_;
 
-  RCLCPP_INFO(rclcpp::get_logger("RecorderNode"), command); 
+  RCLCPP_INFO(rclcpp::get_logger("RecorderNode"), command.c_str()); 
   std::system(command.c_str());
   return 0;
 }
@@ -110,34 +110,34 @@ int RecorderNode::Read() {
   
   milliseconds_since_epoch -= cache_time_;
 
-  // 2. 生成rosbag子包写入writer实例。
+  // 2. 生成rosbag子包写入reader实例。
   const rosbag2_cpp::ConverterOptions converter_options({"cdr", "cdr"});
 
   // 3. 遍历rosbag缓存，将超过截断时间的rosbag数据送入清理队列。
   if (rosbag_paths_.size() <= 1) {
     return 0;
   }
-  
+
   for(int i = 0; i < rosbag_paths_.size() - 1; i++){
 
     std::string rosbag_path = rosbag_paths_[i];
     std::unique_ptr<rosbag2_cpp::readers::SequentialReader> reader;
     reader = std::make_unique<rosbag2_cpp::readers::SequentialReader>();
-    const rosbag2_cpp::StorageOptions storage_options({rosbag_path, format_});
+    const rosbag2_storage::StorageOptions storage_options({rosbag_path, format_});
     reader->open(storage_options, converter_options);
 
     while (reader->has_next()) {
       std::shared_ptr<rosbag2_storage::SerializedBagMessage> message = reader->read_next();
       auto time_stamp = message->time_stamp / 1000000;
-      RCLCPP_INFO(rclcpp::get_logger("RecorderNode"), "rosbag_path: %s, time_stamp: %d", rosbag_path.c_str(), time_stamp); 
+      RCLCPP_INFO(rclcpp::get_logger("RecorderNode"), "rosbag_path: %s, time_stamp: %ld", rosbag_path.c_str(), time_stamp); 
       if (time_stamp > milliseconds_since_epoch) {
-        reader->reset();
+        reader->close();
         return 0;
       }
       clean_paths_.push(rosbag_path);
       break;
     }
-    reader->reset();
+    reader->close();
   }
 
   return 0;
@@ -147,7 +147,7 @@ int RecorderNode::Read() {
 int RecorderNode::Clean() {
   while(!clean_paths_.empty()) {
     std::string command = "rm -rf " + clean_paths_.top();
-    RCLCPP_INFO(rclcpp::get_logger("RecorderNode"), command); 
+    RCLCPP_INFO(rclcpp::get_logger("RecorderNode"), command.c_str()); 
     system(command.c_str());
     clean_paths_.pop();
   }

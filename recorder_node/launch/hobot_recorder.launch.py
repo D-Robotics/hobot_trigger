@@ -18,7 +18,7 @@ def generate_launch_description():
         executable='recorder_node',
         output='screen',
         parameters=[
-            {"cache_path": "/home/hobot/recorder/"},
+            {"cache_path": "/home/robot/recorder/"},
             {"cache_time": 60000},
             {"cycle_time": 60},
             {"format": "mcap"},

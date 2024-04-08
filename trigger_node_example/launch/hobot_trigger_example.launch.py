@@ -12,6 +12,10 @@ from ament_index_python.packages import get_package_prefix
 
 def generate_launch_description():
 
+    format_launch_arg = DeclareLaunchArgument(
+        "trigger_example_format", default_value=TextSubstitution(text="mcap")
+    )
+
     dnn_node_example = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
@@ -31,10 +35,10 @@ def generate_launch_description():
         executable='recorder_node',
         output='screen',
         parameters=[
-            {"cache_path": "/home/hobot/recorder/"},
-            {"cache_time": 60000},
+            {"cache_path": "/home/robot/recorder/"},
+            {"cache_time": 600000},
             {"cycle_time": 60},
-            {"format": "mcap"},
+            {"format": LaunchConfiguration('trigger_example_format')},
             {"mag_bag_size": 524288000},
         ],
         arguments=['--ros-args', '--log-level', 'error']
@@ -75,9 +79,9 @@ def generate_launch_description():
         executable='trigger_node_example',
         output='screen',
         parameters=[
-            {"cache_path": "/home/hobot/recorder/"},
+            {"cache_path": "/home/robot/recorder/"},
             {"config_file": "config/trigger_config.json"},
-            {"format": "mcap"},
+            {"format": LaunchConfiguration('trigger_example_format')},
             {"isRecord": 1},
             {"agent_msg_sub_topic_name": "/hobot_agent"},
             {"event_msg_sub_topic_name": "/ai_msg_mono2d_trash_detection"},
@@ -87,6 +91,7 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        format_launch_arg,
         # dnn_node_example推理示例
         dnn_node_example,
         # recorder node 管理
