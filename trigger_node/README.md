@@ -98,7 +98,7 @@ colcon build --packages-select trigger_node \
 
 | Parameter Name        | Type         | Explanation                                    | Required | Supported Configurations  | Default Value           |
 | --------------------- | ------------ | ---------------------------------------------- | -------- | ------------------------- | ------------------------ |
-| cache_path            | std::string  | Path to the Rosbag folder cached in the runtime environment | No       | Configured based on actual deployment environment | /home/hobot/recorder/ |
+| cache_path            | std::string  | Path to the Rosbag folder cached in the runtime environment | No       | Configured based on actual deployment environment | /home/robot/recorder/ |
 | config_file           | std::string  | Path to the initialization configuration file of the Trigger module | No       | Configured based on actual deployment environment | config/trigger_config.json |
 | format                | std::string  | Format in which Trigger records Rosbag data | No       | mcap | mcap |
 | isRecord              | int          | Choose whether to record Rosbag data for trigger events | No       | 1: record / 0: not record | 0 |

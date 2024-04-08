@@ -88,7 +88,7 @@ colcon build --packages-select trigger_node_example \
 
 | 参数名                 | 类型        | 解释                                        | 是否必须 | 支持的配置           | 默认值                        |
 | ---------------------- | ----------- | ------------------------------------------- | -------- | -------------------- | ----------------------------- |
-| cache_path  | std::string | 缓存在运行环境中的Rosbag文件夹路径 | 否      | 根据实际部署环境配置 | /home/hobot/recorder/ |
+| cache_path  | std::string | 缓存在运行环境中的Rosbag文件夹路径 | 否      | 根据实际部署环境配置 | /home/robot/recorder/ |
 | config_file | std::string | Trigger模块初始化配置文件路径 | 否 | 根据实际部署环境配置 | config/trigger_config.json |
 | format | std::string | Trigger记录Rosbag数据的格式 | 否 | mcap | mcap |
 | isRecord | int | 选择trigger事件是否记录Rosbag数据 | 否 | 1:记录 / 0:不记录 | 0 |
@@ -133,7 +133,7 @@ cp -r install/lib/trigger_node_example/config/ .
 cp -r install/lib/mono2d_trash_detection/config/ .
 
 # 启动agent node
-ros2 run trigger_node_example trigger_node_example
+ros2 run trigger_node_example trigger_node_example --ros-args -p format:=mcap isRecord:=1
 
 ```
 
@@ -149,8 +149,7 @@ cp -r install/lib/mono2d_trash_detection/config/ .
 
 export CAM_TYPE=mipi
 
-ros2 launch trigger_node_example hobot_trigger_example.launch.py
-
+ros2 launch trigger_node_example hobot_trigger_example.launch.py trigger_example_format:=mcap
 ```
 
 ### **Linux X3**
@@ -176,7 +175,7 @@ cp -r install/lib/mono2d_trash_detection/config/ .
    [INFO] [launch]: Default logging verbosity is set to INFO
    [INFO] [trigger_node_example-1]: process started with pid [2981766]
    [trigger_node_example-1] [WARN] [1683970314.850652382] [hobot_trigger]: Parameter:
-   [trigger_node_example-1]  cache_path: /home/hobot/recorder/
+   [trigger_node_example-1]  cache_path: /home/robot/recorder/
    [trigger_node_example-1]  config_file: config/trigger_config.json
    [trigger_node_example-1]  format: mcap
    [trigger_node_example-1]  isRecord(1:record, 0:norecord): 1

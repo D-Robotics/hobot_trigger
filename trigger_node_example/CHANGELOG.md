@@ -1,5 +1,10 @@
 # Changelog for package trigger_node_example
 
+tros_2.1.0 (2024-4-8)
+------------------
+1. 更新中英Readme说明。
+2. 适配humble版本rosbag2。
+
 tros_2.0.4 (2024-3-6)
 ------------------
 1. launch启动脚本中`codec` node的`out_format`配置项参数由`jpeg-compressed`变更为`jpeg`。

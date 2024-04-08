@@ -19,6 +19,7 @@
 #include <dirent.h>
 #include <fstream>
 #include <iostream>
+#include <queue>
 
 #include "rapidjson/document.h"
 #include "rapidjson/istreamwrapper.h"
@@ -114,7 +115,7 @@ class TriggerNode : public rclcpp::Node {
 
  private:
 
-  std::string cache_path_ = "/home/hobot/recorder/";
+  std::string cache_path_ = "/home/robot/recorder/";
   std::string config_file_ = "config/trigger_config.json";
   std::string format_ = "mcap";
   int isRecord_ = 0;

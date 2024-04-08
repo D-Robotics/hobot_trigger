@@ -296,7 +296,7 @@ int TriggerNode::Record() {
   for(auto filename : filename_lists){
 
     std::unique_ptr<rosbag2_cpp::readers::SequentialReader> reader;
-    const rosbag2_cpp::StorageOptions storage_options({filename, format_});
+    const rosbag2_storage::StorageOptions storage_options({filename, format_});
     reader = std::make_unique<rosbag2_cpp::readers::SequentialReader>();
     reader->open(storage_options, converter_options);
 
@@ -328,7 +328,7 @@ int TriggerNode::Record() {
         }
       }
     }
-    reader->reset();
+    reader->close();
   }
   // 4. 将获取的rosbag数据结果，存入结果消息发送队列
   std::string suffix = "";
@@ -350,7 +350,7 @@ int TriggerNode::Record() {
     request.src_module_id, request.trigger_type, save_path.c_str());
 
   // 5. 清理
-  writer->reset();
+  writer->close();
   return 0;
 }
 

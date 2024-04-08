@@ -85,7 +85,7 @@ colcon build --packages-select trigger_node_example \
 
 | Parameter Name          | Type        | Explanation                               | Required | Supported Configurations | Default Value |
 | ----------------------  | ----------- | ----------------------------------------- | -------- | ------------------------ | ------------- |
-| cache_path              | std::string | Path to the Rosbag folder cached in the runtime environment | No       | Configured according to the actual deployment environment | /home/hobot/recorder/ |
+| cache_path              | std::string | Path to the Rosbag folder cached in the runtime environment | No       | Configured according to the actual deployment environment | /home/robot/recorder/ |
 | config_file             | std::string | Path to the configuration file for initializing the Trigger module | No | Configured according to the actual deployment environment | config/trigger_config.json |
 | format                  | std::string | Format for Trigger to record Rosbag data | No | mcap | mcap |
 | isRecord                | int         | Choose whether to record Rosbag data for Trigger events | No | 1: Record / 0: Do not record | 0 |
@@ -129,7 +129,7 @@ cp -r install/lib/trigger_node_example/config/ .
 cp -r install/lib/mono2d_trash_detection/config/ .
 
 # Start agent node
-ros2 run trigger_node_example trigger_node_example
+ros2 run trigger_node_example trigger_node_example --ros-args -p format:=mcap isRecord:=1
 
 ```
 
@@ -145,8 +145,7 @@ cp -r install/lib/mono2d_trash_detection/config/ .
 
 export CAM_TYPE=mipi
 
-ros2 launch trigger_node_example hobot_trigger_example.launch.py
-
+ros2 launch trigger_node_example hobot_trigger_example.launch.py trigger_example_format:=mcap
 ```
 
 ### **Linux X3**
@@ -172,7 +171,7 @@ cp -r install/lib/mono2d_trash_detection/config/ .
    [INFO] [launch]: Default logging verbosity is set to INFO
    [INFO] [trigger_node_example-1]: process started with pid [2981766]
    [trigger_node_example-1] [WARN] [1683970314.850652382] [hobot_trigger]: Parameter:
-   [trigger_node_example-1]  cache_path: /home/hobot/recorder/
+   [trigger_node_example-1]  cache_path: /home/robot/recorder/
    [trigger_node_example-1]  config_file: config/trigger_config.json
    [trigger_node_example-1]  format: mcap
    [trigger_node_example-1]  isRecord(1:record, 0:norecord): 1

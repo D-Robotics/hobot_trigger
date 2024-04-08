@@ -96,7 +96,7 @@ colcon build --packages-select recorder_node \
 
 | Parameter Name | Type         | Description                                 | Required | Supported Configurations | Default Value               |
 | -------------- | ------------ | ------------------------------------------- | -------- | ------------------------ | --------------------------- |
-| cache_path     | std::string  | Path to the rosbag folder cached in the runtime environment | No       | Configured based on actual deployment environment | /home/hobot/recorder/      |
+| cache_path     | std::string  | Path to the rosbag folder cached in the runtime environment | No       | Configured based on actual deployment environment | /home/robot/recorder/      |
 | cache_time     | long         | Time to retain cached data (unit: ms)       | No       | Configured based on actual deployment environment | 60000                        |
 | cycle_time | long | Cycle time for clearing cache data (unit: s) | No | Configured based on actual deployment environment | 60 |
 | format | std::string | Format of recording rosbag data | No | mcap | mcap |
@@ -114,8 +114,7 @@ export COLCON_CURRENT_PREFIX=./install
 source ./install/setup.bash
 
 # Start the recorder node
-ros2 run recorder_node recorder_node
-
+ros2 run recorder_node recorder_node --ros-args -p format:=mcap
 ```
 
 ### **Ubuntu X3 Launch Start**
@@ -147,7 +146,7 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:./install/lib/
 [INFO] [launch]: Default logging verbosity is set to INFO
 [INFO] [recorder_node-1]: process started with pid [521816]
 [recorder_node-1] [WARN] [1685529019.332386609] [RecorderNode]: This is hobot recorder node!
-[recorder_node-1] [WARN] [1685529019.449256848] [RecorderNode]: Parameter:[recorder_node-1]  cache_path: /home/hobot/recorder/
+[recorder_node-1] [WARN] [1685529019.449256848] [RecorderNode]: Parameter:[recorder_node-1]  cache_path: /home/robot/recorder/
 [recorder_node-1]  cache_time(unit: ms): 60000
 [recorder_node-1]  cycle_time(unit: s): 60
 [recorder_node-1]  format: mcap

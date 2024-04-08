@@ -1,5 +1,10 @@
 # Changelog for package trigger_node
 
+tros_2.1.0 (2024-4-8)
+------------------
+1. 更新中英Readme说明。
+2. 适配humble版本rosbag2。
+
 tros_2.0.3 (2023-08-11)
 ------------------
 1. 新增通过std_msg话题给Trigger模块发放任务,更改Trigger配置方法。

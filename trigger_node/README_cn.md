@@ -106,7 +106,7 @@ colcon build --packages-select trigger_node \
 
 | 参数名                 | 类型        | 解释                                        | 是否必须 | 支持的配置           | 默认值                        |
 | ---------------------- | ----------- | ------------------------------------------- | -------- | -------------------- | ----------------------------- |
-| cache_path  | std::string | 缓存在运行环境中的Rosbag文件夹路径 | 否      | 根据实际部署环境配置 | /home/hobot/recorder/ |
+| cache_path  | std::string | 缓存在运行环境中的Rosbag文件夹路径 | 否      | 根据实际部署环境配置 | /home/robot/recorder/ |
 | config_file | std::string | Trigger模块初始化配置文件路径 | 否 | 根据实际部署环境配置 | config/trigger_config.json |
 | format | std::string | Trigger记录Rosbag数据的格式 | 否 | mcap | mcap |
 | isRecord | int | 选择trigger事件是否记录Rosbag数据 | 否 | 1:记录 / 0:不记录 | 0 |
