@@ -36,7 +36,7 @@ def generate_launch_description():
         output='screen',
         parameters=[
             {"cache_path": "/home/robot/recorder/"},
-            {"cache_time": 60000},
+            {"cache_time": 600000},
             {"cycle_time": 60},
             {"format": LaunchConfiguration('trigger_example_format')},
             {"mag_bag_size": 524288000},
