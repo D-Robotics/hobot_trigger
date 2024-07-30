@@ -2,11 +2,11 @@ English| [简体中文](./README_cn.md)
 
 # Function Introduction
 
-**trigger_node package** is a Trigger basic module developed by Horizon Robotics based on Ros2. It is used to obtain specified Rosbag data after triggering Trigger events. The so-called Trigger is to monitor the changes of messages subscribed by the Trigger module based on the set Trigger mechanism, such as detecting changes in the number of detection frame results, changes in vehicle control information, etc., triggering corresponding Trigger events, and recording Ros2 messages within the specified time interval, thereby helping developers locate and reproduce perception, motion control, and other issues in robot scenes.
+**trigger_node package** is a Trigger basic module developed by TROS based on Ros2. It is used to obtain specified Rosbag data after triggering Trigger events. The so-called Trigger is to monitor the changes of messages subscribed by the Trigger module based on the set Trigger mechanism, such as detecting changes in the number of detection frame results, changes in vehicle control information, etc., triggering corresponding Trigger events, and recording Ros2 messages within the specified time interval, thereby helping developers locate and reproduce perception, motion control, and other issues in robot scenes.
 
 This package supports directly subscribing to topics of type `std_msgs/msg/String`, in order to receive Trigger module control information sent by the `agent_node` module. At the same time, it also publishes topics of type `std_msgs/msg/String` to report Trigger events to the `agent_node`, further uploading them to the cloud.
 
-On this basis, the functionality of this package supports developers to use the recorded Trigger information locally without using the Horizon Robotics robot cloud development platform (Eddie Platform).
+On this basis, the functionality of this package supports developers to use the recorded Trigger information locally without using the D-Robotics robot cloud development platform (Eddie Platform).
 
 # Compilation
 

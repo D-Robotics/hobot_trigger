@@ -2,7 +2,7 @@ English| [简体中文](./README_cn.md)
 
 # Function Introduction
 
-The `recorder_node` package is a Ros2-based Rosbag data caching management package developed by Horizon Robotics. Its main function is to record topic data and provide Rosbag cached data for the `recorder_node` module. By managing the cache, unnecessary Rosbag data can be cleaned up through scheduled tasks to ensure that there is sufficient space in the operating environment resources, and it is also convenient for the Trigger module to quickly capture Rosbag data within a specified time interval.
+The `recorder_node` package is a Ros2-based Rosbag data caching management package developed by TROS. Its main function is to record topic data and provide Rosbag cached data for the `recorder_node` module. By managing the cache, unnecessary Rosbag data can be cleaned up through scheduled tasks to ensure that there is sufficient space in the operating environment resources, and it is also convenient for the Trigger module to quickly capture Rosbag data within a specified time interval.
 
 # Compilation
 
@@ -104,7 +104,7 @@ colcon build --packages-select recorder_node \
 
 ## Running
 
-After successful compilation, copy the generated installation path to the Horizon X3 development board (ignore the copying step if compiling on X3), and run the following commands:
+After successful compilation, copy the generated installation path to the RDK X3 development board (ignore the copying step if compiling on X3), and run the following commands:
 
 
 ### **Ubuntu X3**

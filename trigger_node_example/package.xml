@@ -4,7 +4,7 @@
   <name>trigger_node_example</name>
   <version>2.1.0</version>
   <description>TogetheROS hobot trigger node example</description>
-  <maintainer email="zixi01.chen@horizon.cc">zixi01.chen</maintainer>
+  <maintainer email="zixi01.chen@d-robotics.cc">zixi01.chen</maintainer>
   <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

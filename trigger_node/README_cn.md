@@ -2,11 +2,11 @@
 
 # 功能介绍
 
-trigger_node package 是地平线基于Ros2开发的Trigger基础模块，用于在触发Trigger事件后，获取指定Rosbag数据的功能包。所谓Trigger，是在设定好已有Trigger机制基础上，监测Trigger模块订阅的消息变化，例如检测框结果数量变化，小车控制信息变化等，触发对应Trigger事件，记录指定时间区间内的Ros2消息，从而帮助开发人员定位和复现机器人场景中的感知、规控等问题。
+trigger_node package 是基于Ros2开发的Trigger基础模块，用于在触发Trigger事件后，获取指定Rosbag数据的功能包。所谓Trigger，是在设定好已有Trigger机制基础上，监测Trigger模块订阅的消息变化，例如检测框结果数量变化，小车控制信息变化等，触发对应Trigger事件，记录指定时间区间内的Ros2消息，从而帮助开发人员定位和复现机器人场景中的感知、规控等问题。
 
 本package支持直接订阅std_msg/msg/String类型的话题，用以接受agent_node模块发出的Trigger模块控制信息，同时也通过发布std_msg/msg/String类型的话题，将Trigger事件上报给agent_node，进一步上传到云端。
 
-在此基础上，本package功能支持开发者在不使用地平线机器人云开发平台（艾迪平台）基础上使用，所记录的Trigger信息将保存在本地。
+在此基础上，本package功能支持开发者在不使用机器人云开发平台（艾迪平台）基础上使用，所记录的Trigger信息将保存在本地。
 
 
 # 编译

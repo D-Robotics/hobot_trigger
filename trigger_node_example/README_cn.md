@@ -2,7 +2,7 @@
 
 # 功能介绍
 
-trigger_node_example package 是地平线在自定义Trigger基础模块基础上，开发的Trigger模块使用示例。本示例展示的功能，是订阅垃圾检测框信息，根据垃圾检测框的数量，判断是否触发Trigger事件的示例。
+trigger_node_example package 是TROS在自定义Trigger基础模块基础上，开发的Trigger模块使用示例。本示例展示的功能，是订阅垃圾检测框信息，根据垃圾检测框的数量，判断是否触发Trigger事件的示例。
 
 本package支持直接订阅ai_msg/msg/PerceptionTargets类型的话题，在话题回调函数中，判断是否触发Trigger事件，并记录Trigger事件相关的Rosbag包，最后向agent_node发布Trigger事件话题信息。
 
@@ -17,7 +17,7 @@ ros package：
 - rosbag2_cpp
 - std_msgs
 
-'ai_msgs' 是地平线自定义的消息格式，用于算法模型推理后，发布推理结果，ai_msgs package定义在hobot_msgs中。
+'ai_msgs' 是TROS自定义的消息格式，用于算法模型推理后，发布推理结果，ai_msgs package定义在hobot_msgs中。
 
 'rclcpp' 是 ROS2 中的一个C++客户端库，提供了用于创建 ROS2 节点、订阅和发布话题、调用服务、创建定时器等功能的API。
 
@@ -119,7 +119,7 @@ colcon build --packages-select trigger_node_example \
 
 ## 运行
 
-编译成功后，将生成的install路径拷贝到地平线旭日X3开发板上（如果是在X3上编译，忽略拷贝步骤），并执行如下命令运行：
+编译成功后，将生成的install路径拷贝到RDK X3开发板上（如果是在X3上编译，忽略拷贝步骤），并执行如下命令运行：
 
 
 ### **Ubuntu X3**

@@ -2,7 +2,7 @@
 
 # 功能介绍
 
-recorder_node package 是地平线基于Ros2开发的Rosbag数据缓存管理功能包。主要功能，是记录话题数据，为 recorder_node 模块提供Rosbag缓存数据。同时通过缓存管理方式，通过定时任务清理不再需要保存的Rosbag数据，保证运行环境资源空间充足，同时便于Trigger模块快速截取指定时间区间Rosbag数据。
+recorder_node package 是基于Ros2开发的Rosbag数据缓存管理功能包。主要功能，是记录话题数据，为 recorder_node 模块提供Rosbag缓存数据。同时通过缓存管理方式，通过定时任务清理不再需要保存的Rosbag数据，保证运行环境资源空间充足，同时便于Trigger模块快速截取指定时间区间Rosbag数据。
 
 # 编译
 
@@ -106,7 +106,7 @@ colcon build --packages-select recorder_node \
 
 ## 运行
 
-编译成功后，将生成的install路径拷贝到地平线旭日X3开发板上（如果是在X3上编译，忽略拷贝步骤），并执行如下命令运行：
+编译成功后，将生成的install路径拷贝到RDK X3开发板上（如果是在X3上编译，忽略拷贝步骤），并执行如下命令运行：
 
 
 ### **Ubuntu X3**

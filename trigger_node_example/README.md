@@ -2,7 +2,7 @@ English| [简体中文](./README_cn.md)
 
 # Function Introduction
 
-The `trigger_node_example` package is developed by Horizon based on the custom Trigger basic module, demonstrating the usage of Trigger module. The functionality showcased in this example is subscribing to garbage detection box information and triggering Trigger events based on the number of garbage detection boxes.
+The `trigger_node_example` package is developed by TROS based on the custom Trigger basic module, demonstrating the usage of Trigger module. The functionality showcased in this example is subscribing to garbage detection box information and triggering Trigger events based on the number of garbage detection boxes.
 
 This package supports direct subscription to the topic of type `ai_msg/msg/PerceptionTargets`. In the topic callback function, it determines whether to trigger Trigger events, records relevant Rosbag packages for Trigger events, and finally publishes Trigger event topic information to `agent_node`.
 
@@ -17,7 +17,7 @@ ROS packages:
 - rosbag2_cpp
 - std_msgs
 
-`ai_msgs` is a custom message format by Horizon, used for publishing inference results after algorithm model inference, with the `ai_msgs` package defined in `hobot_msgs`.
+`ai_msgs` is a custom message format by TROS, used for publishing inference results after algorithm model inference, with the `ai_msgs` package defined in `hobot_msgs`.
 
 `rclcpp` is a C++ client library in ROS2, providing APIs for creating ROS2 nodes, subscribing and publishing topics, invoking services, creating timers, etc.
 
