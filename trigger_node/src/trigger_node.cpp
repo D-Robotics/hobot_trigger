@@ -1,4 +1,4 @@
-// Copyright (c) 2024，D-Robotics.
+// Copyright (c) 2023，Horizon Robotics.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -314,16 +314,26 @@ int TriggerNode::Record() {
 
     while (reader->has_next()) {
       std::shared_ptr<rosbag2_storage::SerializedBagMessage> message = reader->read_next();
+      #ifdef ROSBAG2_STORAGE_2
+      if ((message->recv_timestamp / 1000000) < ts_front || (message->recv_timestamp / 1000000) > ts_back) {
+        continue;
+      }
+      #else
       if ((message->time_stamp / 1000000) < ts_front || (message->time_stamp / 1000000) > ts_back) {
         continue;
       }
+      #endif
 
       for(auto request_topic : request.topics){
         if (request_topic == message->topic_name){   
           auto bag_message = std::make_shared<rosbag2_storage::SerializedBagMessage>();
           bag_message->serialized_data = message->serialized_data;
           bag_message->topic_name = message->topic_name;
+          #ifdef ROSBAG2_STORAGE_2
+          bag_message->recv_timestamp = message->recv_timestamp;
+          #else
           bag_message->time_stamp = message->time_stamp;
+          #endif
           writer->write(bag_message);
         }
       }
