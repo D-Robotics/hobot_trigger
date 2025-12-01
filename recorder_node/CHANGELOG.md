@@ -1,4 +1,7 @@
 # Changelog for package recorder_node
+tros_2.1.1 (2025-12-01)
+------------------
+1. 支持ros jazzy
 
 tros_2.1.0 (2024-4-8)
 ------------------
