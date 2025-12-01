@@ -1,4 +1,4 @@
-// Copyright (c) 2024，D-Robotics.
+// Copyright (c) 2023，Horizon Robotics.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -128,7 +128,11 @@ int RecorderNode::Read() {
 
     while (reader->has_next()) {
       std::shared_ptr<rosbag2_storage::SerializedBagMessage> message = reader->read_next();
+      #ifdef ROSBAG2_STORAGE_2
+      auto time_stamp = message->recv_timestamp / 1000000;
+      #else
       auto time_stamp = message->time_stamp / 1000000;
+      #endif
       RCLCPP_INFO(rclcpp::get_logger("RecorderNode"), "rosbag_path: %s, time_stamp: %ld", rosbag_path.c_str(), time_stamp); 
       if (time_stamp > milliseconds_since_epoch) {
         reader->close();

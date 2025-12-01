@@ -23,6 +23,28 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rosbag2_cpp REQUIRED)
 
+if(DEFINED ENV{ROS_DISTRO})
+    set(PREFERRED_ROS_DISTRO $ENV{ROS_DISTRO})
+else()
+    # 设置默认优先级，jazzy优先于humble
+    if(EXISTS "/opt/ros/jazzy")
+        set(PREFERRED_ROS_DISTRO jazzy)
+    elseif(EXISTS "/opt/ros/humble")
+        set(PREFERRED_ROS_DISTRO humble)
+    else()
+        set(PREFERRED_ROS_DISTRO humble)
+    endif()
+endif()
+
+if(DEFINED PREFERRED_ROS_DISTRO)
+    message(STATUS "Preferred ROS distribution: ${PREFERRED_ROS_DISTRO}")
+endif()
+
+
+if("${PREFERRED_ROS_DISTRO}" STREQUAL "jazzy")
+    add_definitions(-DROSBAG2_STORAGE_2)
+endif()
+
 include_directories(include
   ${PROJECT_SOURCE_DIR}
 )
